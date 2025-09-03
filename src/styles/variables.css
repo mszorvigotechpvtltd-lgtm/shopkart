@@ -1,0 +1,15 @@
+:root {
+  --color-base: oklch(40.5% 0.101 131.063);
+  --primary-color: #222831;
+  --secondary-color: #00adb5;
+  --text-color: #393e46;
+  --font-xl: 2rem;
+  --font-lg: 1.25rem;
+  --font-md: 1rem;
+  --font-sm: 0.875rem;
+  --color-bg: #35530e;
+  --color-text: white;
+  --color-inverted-bg: white;
+  --color-inverted-text: #35530e;
+  --color-loader-bg: #7d7d7db0;
+}
