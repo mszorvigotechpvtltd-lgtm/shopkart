@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String     @id @default(cuid())
+  title           String
+  slug            String     @unique
+  description     String
+  price           Float
+  rating          Int
+  manufacturer    String
+  categoryId      String
+  subCategoryId   String
+  mainImage       String
+  inStock         Int
+  availableSizes  String?
+  defaultSize     String?
+  selectedSize    String?
+  sizeMetric      String?
+  keyFeatures     Json?
+  isFeatured      Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  // Relations
+  category        Category   @relation(fields: [categoryId], references: [id])
+  subCategory     SubCategory @relation(fields: [subCategoryId], references: [id])
+  images          ProductImage[]
+  customerOrders  customer_order_product[]
+  Wishlist        Wishlist[]
+  cartItems       CartItem[]
+}
+
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model User {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  password        String   // Hashed password
+  phone           String?  
+  profileImage    String?  // URL to avatar
+  dob             DateTime?
+  gender          Gender?
+  role            Role     @default(USER)
+  termsAccepted   Boolean  @default(false)
+  referralCode    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+    Wishlist Wishlist[]
+    cart      Cart?
+
+  // Relations (if any)
+  // accounts        Account[]  // Example: for OAuth or social login
+
+  @@map("users") // optional: custom table name
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model Customer_order {
+  id          String                   @id @default(uuid())
+  name        String
+  lastname    String
+  phone       String
+  email       String
+  company     String
+  address      String
+  apartment   String
+  postalCode  String
+  dateTime    DateTime?                @default(now())
+  status      String
+  city        String
+  country     String
+  orderNotice String?
+  total       Int
+  products    customer_order_product[]
+}
+
+model customer_order_product {
+  id              String         @id @default(uuid())
+  customerOrder   Customer_order @relation(fields: [customerOrderId], references: [id])
+  customerOrderId String
+  product         Product        @relation(fields: [productId], references: [id])
+  productId       String
+  quantity        Int
+  price           Float
+  rating          Int
+  slug            String
+  mainImage       String
+}
+
+model Category {
+  id          String       @id
+  name        String
+  slug        String       @unique
+  description String?
+  products   Product[]
+  subcategories SubCategory[]
+  isSpecialCategory Boolean
+  badge      String
+}
+
+model SubCategory {
+  id          String   @id
+  name        String
+  slug        String
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  products    Product[]
+}
+
+
+
+model Wishlist {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  @@unique([userId, productId], name: "userId_productId")
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String     @unique
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  cartId    String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  @@unique([cartId, productId]) 
+  // Optionally snapshot price at add-time
+  // price     Float?
+  // mrp       Float?
+  // discount  Float?
+}
+
+model NewsletterSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
