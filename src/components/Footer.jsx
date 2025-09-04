@@ -24,7 +24,7 @@ export default async function SiteFooter() {
               height={80}
               className="object-none"
             />
-            <span className="font-bold text-2xl tracking-wider">ShopKart</span>
+            <span className="font-bold text-2xl tracking-wider">ShopKart Apparels</span>
           </Link>
           <p className="text-white/80 mb-2 max-w-[300px]">
             Your trusted destination for trending fashion.
@@ -33,7 +33,7 @@ export default async function SiteFooter() {
           </p>
           <div className="flex flex-col gap-1 text-white/70 text-sm mt-3 md:items-start items-center">
             <span className="flex items-center gap-2">
-              <Mail className="w-4 h-4" /> contact@shopkart.com
+              <Mail className="w-4 h-4" /> connect@shopkartapparels.com
             </span>
             <span className="flex items-center gap-2">
               <Phone className="w-4 h-4" /> +91 99118 01871

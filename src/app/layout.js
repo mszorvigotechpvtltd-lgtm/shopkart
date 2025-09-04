@@ -6,7 +6,7 @@ import Providers from "@/provider/Providers";
 import "keen-slider/keen-slider.min.css";
 
 export const metadata = {
-  title: "Garments Store",
+  title: "Shopkart Apparels",
 };
 
 export default async function RootLayout({ children }) {
