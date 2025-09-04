@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
 
 // Pass featuredProducts as props or fetch inside component
 export default function FeaturedProducts({ products = [] }) {

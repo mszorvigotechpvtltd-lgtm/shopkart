@@ -3,6 +3,7 @@ import "./globals.css";
 import AuthProvider from "@/provider/SessionProvider";
 import { getServerSession } from "next-auth";
 import Providers from "@/provider/Providers";
+import "keen-slider/keen-slider.min.css";
 
 export const metadata = {
   title: "Garments Store",
